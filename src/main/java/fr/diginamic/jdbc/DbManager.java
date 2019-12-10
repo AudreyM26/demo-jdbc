@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import fr.diginamic.jdbc.entites.Fournisseur;
@@ -29,28 +30,36 @@ public class DbManager {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			System.out.println("Connexion a échoué");
 		}
 		return maConnection;
 
 	}
 
 	public boolean isClass() {
-		if(CLASS_DRIVER == false){
-			try {
-				Class.forName(driverDB);
-				CLASS_DRIVER = true;
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
-				System.out.println(e.getMessage());
-				CLASS_DRIVER = false;
-			}
+		Boolean exist = false;
+		
+		try {
+			Class.forName(driverDB);
+			exist = true;
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}
-		return CLASS_DRIVER;
+
+		return exist;
 	}
 
-	public void executeUpdate(String requete) {
+	public int executeUpdate(String requete) {
 
-		if (this.isClass()) {
+		int nb = 0;
+		
+		if(CLASS_DRIVER == false){
+			CLASS_DRIVER = this.isClass();
+		}
+		
+		
+		if (CLASS_DRIVER) {
 			Connection maConnection = null;
 			maConnection = this.getConnection();
 
@@ -61,7 +70,7 @@ public class DbManager {
 
 				stmt = maConnection.createStatement();
 
-				stmt.executeUpdate(requete);
+				nb = stmt.executeUpdate(requete);
 
 			} catch (SQLException e) {
 				// Traitement de l'exception si elle se produit
@@ -101,14 +110,20 @@ public class DbManager {
 				}
 			}
 		}
+		return nb;
 
 	}
 	
-	public ArrayList<Fournisseur> executeQuery(String requete) {
+	public List<Fournisseur> executeQuery(String requete) {
 		
-		ArrayList<Fournisseur> fournisseurs = new ArrayList<>();
+		List<Fournisseur> fournisseurs = new ArrayList<>();
 		
-		if (this.isClass()) {
+		if(CLASS_DRIVER == false){
+			CLASS_DRIVER = this.isClass();
+		}
+		
+		
+		if (CLASS_DRIVER) {
 			Connection maConnection = null;
 			maConnection = this.getConnection();
 
