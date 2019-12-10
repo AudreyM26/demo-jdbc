@@ -21,10 +21,8 @@ public class TestConnexionJdbc {
 			Connection maConnection = DriverManager.getConnection(urlDB,userDB,passwordDB);
 			System.out.println(maConnection.getCatalog());
 			
-			Statement stmt = maConnection.createStatement();
 		    System.out.println("Connection established!");
-		    
-		    
+		  
 		    maConnection.close();
 		    
 		} catch (SQLException e) {
