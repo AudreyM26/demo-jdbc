@@ -14,18 +14,21 @@ import fr.diginamic.jdbc.entites.Fournisseur;
 
 public class DbManager {
 
+	public static String URL_DB = "database.urlcompta";
 	ResourceBundle monFichierConf = ResourceBundle.getBundle("databases");
-	String urlDB = monFichierConf.getString("database.url");
+	String urlDB = monFichierConf.getString(URL_DB);
 	String userDB = monFichierConf.getString("database.user");
 	String passwordDB = monFichierConf.getString("database.password");
 	String driverDB = monFichierConf.getString("database.driver");
 	public static boolean CLASS_DRIVER = false;
-
+	
+	
 	public Connection getConnection() {
 
 		Connection maConnection = null;
 
 		try {
+	
 			maConnection = DriverManager.getConnection(urlDB, userDB, passwordDB);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -66,7 +69,6 @@ public class DbManager {
 			Statement stmt = null;
 
 			try {
-				maConnection = DriverManager.getConnection(urlDB, userDB, passwordDB);
 
 				stmt = maConnection.createStatement();
 
@@ -114,34 +116,34 @@ public class DbManager {
 
 	}
 	
-	public List<Fournisseur> executeQuery(String requete) {
-		
-		List<Fournisseur> fournisseurs = new ArrayList<>();
+	public ResultSet executeQuery(String requete){	
 		
 		if(CLASS_DRIVER == false){
 			CLASS_DRIVER = this.isClass();
 		}
 		
+		ResultSet curseur = null;
 		
 		if (CLASS_DRIVER) {
 			Connection maConnection = null;
 			maConnection = this.getConnection();
 
 			Statement stmt = null;
-			ResultSet curseur = null;
+			
 			
 			try {
 				stmt = maConnection.createStatement();
 
 				curseur = stmt.executeQuery(requete);
 				
+				/*
 				while (curseur.next()){
 					Integer id = curseur.getInt("ID");
 					String nom = curseur.getString("NOM");
 					
 					Fournisseur four = new Fournisseur(id,nom);
 					fournisseurs.add(four);
-				}
+				}*/
 
 			} catch (SQLException e) {
 				// Traitement de l'exception si elle se produit
@@ -182,6 +184,7 @@ public class DbManager {
 			}
 		}
 	
-		return fournisseurs;
+		return curseur;
+		
 	}
 }
