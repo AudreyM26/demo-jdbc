@@ -112,16 +112,7 @@ public class DbManager {
 				e1.printStackTrace();
 				System.out.println("Erreur fermeture de statement");
 			}
-			/*
-			try {
-				if(maConnection != null){
-					maConnection.close();
-				}
-			} catch (SQLException e2) {
-				e2.printStackTrace();
-				System.out.println("Erreur fermeture de connexion");
-			}
-			*/
+
 			//close();
 		}
 		
@@ -147,21 +138,16 @@ public class DbManager {
 		ResultSet curseur = null;
 		Statement stmt = null;
 		
-		
 		try {
-			maConnection = getConnection();
+			
+			if(maConnection == null){
+				maConnection = getConnection();
+			}
+			
 			stmt = maConnection.createStatement();
 
 			curseur = stmt.executeQuery(requete);
-			
-			/*
-			while (curseur.next()){
-				Integer id = curseur.getInt("ID");
-				String nom = curseur.getString("NOM");
-				
-				Fournisseur four = new Fournisseur(id,nom);
-				fournisseurs.add(four);
-			}*/
+
 
 		} catch (SQLException e) {
 			// Traitement de l'exception si elle se produit
