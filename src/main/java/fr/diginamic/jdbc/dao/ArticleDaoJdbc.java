@@ -13,7 +13,7 @@ public class ArticleDaoJdbc implements ArticleDao {
 
 	private static DbManager dbMan = new DbManager();
 	
-	List<String> valeur_attribut = new ArrayList<>();
+	List<Object> valeurAttribut = new ArrayList<>();
 	
 	@Override
 	public List<Article> extraire() {
@@ -30,6 +30,7 @@ public class ArticleDaoJdbc implements ArticleDao {
 				Article art = new Article(id,ref,designation,resultat.getDouble("PRIX"),four);
 				articles.add(art);
 			}
+			resultat.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -46,6 +47,7 @@ public class ArticleDaoJdbc implements ArticleDao {
 			while (moy.next()){
 				result = moy.getDouble("moyenne");
 			}
+			moy.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -61,14 +63,14 @@ public class ArticleDaoJdbc implements ArticleDao {
 		String requete = "insert ignore into article (ID,REF,DESIGNATION,PRIX,ID_FOURNISSEUR) values(?,?,?,?,?);";
 		
 		//System.out.println(requete);
-		valeur_attribut.removeAll(valeur_attribut);
+		valeurAttribut.removeAll(valeurAttribut);
 		
-		valeur_attribut.add(String.valueOf(article.getId()));
-		valeur_attribut.add(article.getReference());
-		valeur_attribut.add(designation);
-		valeur_attribut.add(String.valueOf(article.getPrix()));
-		valeur_attribut.add(String.valueOf(article.getFournisseur().getId()));
-		dbMan.executeUpdate(requete,valeur_attribut);
+		valeurAttribut.add(article.getId());
+		valeurAttribut.add(article.getReference());
+		valeurAttribut.add(designation);
+		valeurAttribut.add(article.getPrix());
+		valeurAttribut.add(article.getFournisseur().getId());
+		dbMan.executeUpdate(requete,valeurAttribut);
 
 	}
 
@@ -78,10 +80,10 @@ public class ArticleDaoJdbc implements ArticleDao {
 		//String requete = "update article set prix= prix-(prix*"+nouvelleValeur+"/100) where designation like '%mate%'";
 		String requete = "update article set prix= prix-(prix*?/100) where designation like '%mate%'";
 		
-		valeur_attribut.removeAll(valeur_attribut);
-		valeur_attribut.add(String.valueOf(nouvelleValeur));
+		valeurAttribut.removeAll(valeurAttribut);
+		valeurAttribut.add(nouvelleValeur);
 		//System.out.println(requete);
-		return dbMan.executeUpdate(requete,valeur_attribut);
+		return dbMan.executeUpdate(requete,valeurAttribut);
 	}
 
 	@Override
@@ -90,8 +92,8 @@ public class ArticleDaoJdbc implements ArticleDao {
 		Boolean suppr = false;
 		String requete = "delete from article where designation like '%Peinture%'";
 		//System.out.println(requete);
-		valeur_attribut.removeAll(valeur_attribut);
-		int nb = dbMan.executeUpdate(requete,valeur_attribut);
+		valeurAttribut.removeAll(valeurAttribut);
+		int nb = dbMan.executeUpdate(requete,valeurAttribut);
 		if(nb > 0){
 			suppr= true;
 		}

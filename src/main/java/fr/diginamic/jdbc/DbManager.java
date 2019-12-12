@@ -54,21 +54,24 @@ public class DbManager {
 	}
 	
 
-	public int executeUpdate(String requete, List<String> liste_attributs) {
+	public int executeUpdate(String requete, List<Object> liste_attributs) {
 
 		int nb = 0;
 
 		//Statement stmt = null;
 		PreparedStatement stmt =null;
 		try {
-			maConnection = getConnection();
+			if(maConnection == null){
+				maConnection = getConnection();
+			}
+			
 			//stmt = maConnection.createStatement();
 			
 			//nb = stmt.executeUpdate(requete);
 			int cpt = 1;
 			stmt = maConnection.prepareStatement(requete);
-			for (String l :liste_attributs){
-				stmt.setString(cpt,l);
+			for (Object l :liste_attributs){
+				stmt.setObject(cpt, l);
 				//System.out.println(l);
 				cpt +=1;
 			}
