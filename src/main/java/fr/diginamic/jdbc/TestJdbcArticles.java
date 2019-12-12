@@ -7,15 +7,31 @@ import fr.diginamic.jdbc.dao.FournisseurDaoJdbc;
 import fr.diginamic.jdbc.entites.Article;
 import fr.diginamic.jdbc.entites.Fournisseur;
 
+/***
+ * ajout nouveau fournisseur
+ * ajout 4 nouveaux articles
+ * modifier le prix des articles contenant le mot mate
+ * afficher la liste des articles
+ * afficher la moyenne des prix des articles
+ * supprimer le fournisseur
+ * supprimer les articles contenant le mot Peinture
+ * @author audrey
+ *
+ */
 public class TestJdbcArticles {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
+		DbManager.URL_DB = "database.urlcompta";
+	
+		long b = System.currentTimeMillis();
 		FournisseurDaoJdbc fournisseurDaoJdbc = new FournisseurDaoJdbc();
 		Fournisseur fournisseurPeinture = new Fournisseur(4,"La Maison de la Peinture");
 		fournisseurDaoJdbc.insert(fournisseurPeinture);
-		
+
+		//fournisseurDaoJdbc.update("La Maison de la Peinture","La Maison des Peintures");
+	
 		ArticleDaoJdbc articleDaoJdbc = new ArticleDaoJdbc();
 		
 		Article peintureBlanche = new Article(11,"PB1","Peinture blanche 1L",12.50,fournisseurPeinture); 
@@ -29,6 +45,7 @@ public class TestJdbcArticles {
 		articleDaoJdbc.insert(peintureBleue);
 		
 		articleDaoJdbc.update(25);
+		
 		
 		List<Article> articles = articleDaoJdbc.extraire();
 		
@@ -53,6 +70,10 @@ public class TestJdbcArticles {
 			System.out.println("Le fournisseur '"+fournisseurNomSupp+"' a bien été supprimé");
 		}
 		
+		long c = System.currentTimeMillis();
+		System.out.println(c-b);
+		fournisseurDaoJdbc.close();
+		articleDaoJdbc.close();
 	}
 
 }

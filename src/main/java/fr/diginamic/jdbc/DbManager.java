@@ -2,187 +2,204 @@ package fr.diginamic.jdbc;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import fr.diginamic.jdbc.entites.Fournisseur;
-
+/***
+ * methode de connexion a la base de données
+ * executionUpdate (insert, update et delete
+ * executionQuery (select) retourne ResultSet
+ * @author audrey
+ *
+ */
 
 public class DbManager {
-
+	
 	public static String URL_DB = "database.urlcompta";
 	ResourceBundle monFichierConf = ResourceBundle.getBundle("databases");
-	String urlDB = monFichierConf.getString(URL_DB);
-	String userDB = monFichierConf.getString("database.user");
-	String passwordDB = monFichierConf.getString("database.password");
-	String driverDB = monFichierConf.getString("database.driver");
+	private String urlDB;
+	private String userDB;
+	private String passwordDB;
+	private String driverDB;
 	public static boolean CLASS_DRIVER = false;
 	
-	
-	public Connection getConnection() {
+	Connection maConnection = null;
 
-		Connection maConnection = null;
-
-		try {
-	
-			maConnection = DriverManager.getConnection(urlDB, userDB, passwordDB);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			System.out.println("Connexion a échoué");
-		}
-		return maConnection;
-
-	}
-
-	public boolean isClass() {
-		Boolean exist = false;
+	public DbManager(){
+		
+		urlDB = monFichierConf.getString(URL_DB);
+		userDB = monFichierConf.getString("database.user");
+		passwordDB = monFichierConf.getString("database.password");
+		driverDB = monFichierConf.getString("database.driver");
 		
 		try {
 			Class.forName(driverDB);
-			exist = true;
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
 		}
-
-		return exist;
+		    
 	}
+	
+	public Connection getConnection(){
+		try {
+			return DriverManager.getConnection(urlDB, userDB, passwordDB);
+		} catch (SQLException e) {
+			throw new RuntimeException("Impossible de récupérer une nouvelle connexion sur la base de données.");
+		}
+	}
+	
 
-	public int executeUpdate(String requete) {
+	public int executeUpdate(String requete, List<String> liste_attributs) {
 
 		int nb = 0;
-		
-		if(CLASS_DRIVER == false){
-			CLASS_DRIVER = this.isClass();
-		}
-		
-		
-		if (CLASS_DRIVER) {
-			Connection maConnection = null;
-			maConnection = this.getConnection();
 
-			Statement stmt = null;
+		//Statement stmt = null;
+		PreparedStatement stmt =null;
+		try {
+			maConnection = getConnection();
+			//stmt = maConnection.createStatement();
+			
+			//nb = stmt.executeUpdate(requete);
+			int cpt = 1;
+			stmt = maConnection.prepareStatement(requete);
+			for (String l :liste_attributs){
+				stmt.setString(cpt,l);
+				//System.out.println(l);
+				cpt +=1;
+			}
+			
+			nb = stmt.executeUpdate();
+		} catch (SQLException e) {
+			// Traitement de l'exception si elle se produit
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+
+			// annuler transaction
+			try {
+				if(maConnection != null){
+					maConnection.rollback();
+				}
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+				System.out.println("Erreur sur l annulation de la transaction");
+			}
+		} finally {
+			// Fermeture des ressources: resultSet, statement, connexion.
+
+			// valider transaction
+			try {
+				if(maConnection != null){
+					maConnection.commit();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+				System.out.println("Erreur sur la validation de la transaction");
+			}
 
 			try {
-
-				stmt = maConnection.createStatement();
-
-				nb = stmt.executeUpdate(requete);
-
-			} catch (SQLException e) {
-				// Traitement de l'exception si elle se produit
-				e.printStackTrace();
-				System.out.println(e.getMessage());
-
-				// annuler transaction
-				try {
-					maConnection.rollback();
-				} catch (SQLException e1) {
-					e1.printStackTrace();
-					System.out.println("Erreur sur l annulation de la transaction");
-				}
-			} finally {
-				// Fermeture des ressources: resultSet, statement, connexion.
-
-				// valider transaction
-				try {
-					maConnection.commit();
-				} catch (SQLException e) {
-					e.printStackTrace();
-					System.out.println("Erreur sur la validation de la transaction");
-				}
-
-				try {
+				if(stmt != null){
 					stmt.close();
-				} catch (SQLException e1) {
-					e1.printStackTrace();
-					System.out.println("Erreur fermeture de statement");
 				}
-
-				try {
-					maConnection.close();
-				} catch (SQLException e2) {
-					e2.printStackTrace();
-					System.out.println("Erreur fermeture de connexion");
-				}
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+				System.out.println("Erreur fermeture de statement");
 			}
+			/*
+			try {
+				if(maConnection != null){
+					maConnection.close();
+				}
+			} catch (SQLException e2) {
+				e2.printStackTrace();
+				System.out.println("Erreur fermeture de connexion");
+			}
+			*/
+			//close();
 		}
+		
 		return nb;
 
 	}
 	
+	public void close(){
+		try {
+			if(maConnection != null){
+				maConnection.close();
+			}
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+			System.out.println("Erreur fermeture de connexion");
+		}	
+	}
+	
+	
 	public ResultSet executeQuery(String requete){	
 		
-		if(CLASS_DRIVER == false){
-			CLASS_DRIVER = this.isClass();
-		}
 		
 		ResultSet curseur = null;
+		Statement stmt = null;
 		
-		if (CLASS_DRIVER) {
-			Connection maConnection = null;
-			maConnection = this.getConnection();
+		
+		try {
+			maConnection = getConnection();
+			stmt = maConnection.createStatement();
 
-			Statement stmt = null;
+			curseur = stmt.executeQuery(requete);
 			
-			
-			try {
-				stmt = maConnection.createStatement();
-
-				curseur = stmt.executeQuery(requete);
+			/*
+			while (curseur.next()){
+				Integer id = curseur.getInt("ID");
+				String nom = curseur.getString("NOM");
 				
-				/*
-				while (curseur.next()){
-					Integer id = curseur.getInt("ID");
-					String nom = curseur.getString("NOM");
-					
-					Fournisseur four = new Fournisseur(id,nom);
-					fournisseurs.add(four);
-				}*/
+				Fournisseur four = new Fournisseur(id,nom);
+				fournisseurs.add(four);
+			}*/
 
-			} catch (SQLException e) {
-				// Traitement de l'exception si elle se produit
-				e.printStackTrace();
-				System.out.println(e.getMessage());
+		} catch (SQLException e) {
+			// Traitement de l'exception si elle se produit
+			e.printStackTrace();
+			System.out.println(e.getMessage());
 
-				// annuler transaction
-				try {
+			// annuler transaction
+			try {
+				if(maConnection != null){
 					maConnection.rollback();
-				} catch (SQLException e1) {
-					e1.printStackTrace();
-					System.out.println("Erreur sur l annulation de la transaction");
 				}
-			} finally {
-				// Fermeture des ressources: resultSet, statement, connexion.
-
-				// valider transaction
-				try {
-					maConnection.commit();
-				} catch (SQLException e) {
-					e.printStackTrace();
-					System.out.println("Erreur sur la validation de la transaction");
-				}
-
-				try {
-					stmt.close();
-				} catch (SQLException e1) {
-					e1.printStackTrace();
-					System.out.println("Erreur fermeture de statement");
-				}
-
-				try {
-					maConnection.close();
-				} catch (SQLException e2) {
-					e2.printStackTrace();
-					System.out.println("Erreur fermeture de connexion");
-				}
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+				System.out.println("Erreur sur l annulation de la transaction");
 			}
+		} finally {
+			// Fermeture des ressources: resultSet, statement, connexion.
+
+			// valider transaction
+			try {
+				if(maConnection != null){
+					maConnection.commit();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+				System.out.println("Erreur sur la validation de la transaction");
+			}
+
+			try {
+				if(stmt != null){
+					stmt.close();
+				}
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+				System.out.println("Erreur fermeture de statement");
+			}
+
+			//close();
+
 		}
+		
 	
 		return curseur;
 		

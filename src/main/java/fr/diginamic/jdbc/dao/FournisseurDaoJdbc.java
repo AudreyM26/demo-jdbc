@@ -1,6 +1,5 @@
 package fr.diginamic.jdbc.dao;
 
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -9,9 +8,16 @@ import java.util.List;
 import fr.diginamic.jdbc.DbManager;
 import fr.diginamic.jdbc.entites.Fournisseur;
 
+/***
+ * classe permettant de traiter les requetes 
+ * @author audrey
+ *
+ */
+
 public class FournisseurDaoJdbc implements FournisseurDao {
 
 	private static DbManager dbMan = new DbManager();
+	List<String> valeur_attribut = new ArrayList<>();
 	
 	@Override
 	public List<Fournisseur> extraire() {
@@ -33,7 +39,6 @@ public class FournisseurDaoJdbc implements FournisseurDao {
 			e.printStackTrace();
 		}
 		
-		
 		return fournisseurs;
 	}
 
@@ -41,30 +46,48 @@ public class FournisseurDaoJdbc implements FournisseurDao {
 	public void insert(Fournisseur fournisseur) {
 		// TODO Auto-generated method stub
 		String nom = fournisseur.getNom().replace("'", "''");
-		String requete = "insert ignore into fournisseur (ID,NOM) values("+fournisseur.getId()+",'"+nom+"')";
+		//String requete = "insert ignore into fournisseur (ID,NOM) values("+fournisseur.getId()+",'"+nom+"')";
+		
+		String requete = "insert ignore into fournisseur(ID,NOM) values (?,?)";
+		valeur_attribut.removeAll(valeur_attribut);
+		valeur_attribut.add(String.valueOf(fournisseur.getId()));
+		valeur_attribut.add(nom);
+		
 		//System.out.println(requete);
-		dbMan.executeUpdate(requete);
+		dbMan.executeUpdate(requete,valeur_attribut);
 	}
 
 	@Override
 	public int update(String ancienNom, String nouveauNom) {
 		// TODO Auto-generated method stub
-		String requete = "update fournisseur set nom='"+nouveauNom+"' where nom ='"+ancienNom+"'";
+		//String requete = "update fournisseur set nom='"+nouveauNom+"' where nom ='"+ancienNom+"'";
+		
+		String requete = "update fournisseur set nom=? where nom =?";
 		//System.out.println(requete);
-		return dbMan.executeUpdate(requete);
+		valeur_attribut.removeAll(valeur_attribut);
+		valeur_attribut.add(nouveauNom);
+		valeur_attribut.add(ancienNom);
+		return dbMan.executeUpdate(requete,valeur_attribut);
 	}
 
 	@Override
 	public boolean delete(Fournisseur fournisseur) {
 		// TODO Auto-generated method stub
 		Boolean suppr = false;
-		String requete = "delete from fournisseur where id="+fournisseur.getId();
+		//String requete = "delete from fournisseur where id="+fournisseur.getId();
+		String requete = "delete from fournisseur where id=?";
 		//System.out.println(requete);
-		int nb = dbMan.executeUpdate(requete);
+		valeur_attribut.removeAll(valeur_attribut);
+		valeur_attribut.add(String.valueOf(fournisseur.getId()));
+		
+		int nb = dbMan.executeUpdate(requete,valeur_attribut);
 		if(nb > 0){
 			suppr= true;
 		}
 		return suppr;
 	}
 
+	public void close(){
+		dbMan.close();
+	}
 }
