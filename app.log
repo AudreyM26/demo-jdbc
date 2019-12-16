@@ -1,0 +1,66 @@
+12:41:41.157 [main] DEBUG fr.diginamic.jdbc.AppLogback - Traitement : param = Connexion : executeUpdate
+12:41:41.259 [main] DEBUG fr.diginamic.jdbc.AppLogback - Traitement : param = executeUpdate : insert ignore into fournisseur(ID,NOM) values (?,?)
+12:41:41.259 [main] DEBUG fr.diginamic.jdbc.AppLogback - Traitement : param = executeUpdate : commit 
+12:41:41.259 [main] DEBUG fr.diginamic.jdbc.AppLogback - Traitement : param = executeUpdate : statement fermé
+12:41:41.273 [main] DEBUG fr.diginamic.jdbc.AppLogback - Traitement : param = Connexion : executeUpdate
+12:41:41.309 [main] DEBUG fr.diginamic.jdbc.AppLogback - Traitement : param = executeUpdate : insert ignore into article (ID,REF,DESIGNATION,PRIX,ID_FOURNISSEUR) values(?,?,?,?,?);
+12:41:41.309 [main] DEBUG fr.diginamic.jdbc.AppLogback - Traitement : param = executeUpdate : commit 
+12:41:41.309 [main] DEBUG fr.diginamic.jdbc.AppLogback - Traitement : param = executeUpdate : statement fermé
+12:41:41.354 [main] DEBUG fr.diginamic.jdbc.AppLogback - Traitement : param = executeUpdate : insert ignore into article (ID,REF,DESIGNATION,PRIX,ID_FOURNISSEUR) values(?,?,?,?,?);
+12:41:41.355 [main] DEBUG fr.diginamic.jdbc.AppLogback - Traitement : param = executeUpdate : commit 
+12:41:41.355 [main] DEBUG fr.diginamic.jdbc.AppLogback - Traitement : param = executeUpdate : statement fermé
+12:41:41.408 [main] DEBUG fr.diginamic.jdbc.AppLogback - Traitement : param = executeUpdate : insert ignore into article (ID,REF,DESIGNATION,PRIX,ID_FOURNISSEUR) values(?,?,?,?,?);
+12:41:41.408 [main] DEBUG fr.diginamic.jdbc.AppLogback - Traitement : param = executeUpdate : commit 
+12:41:41.408 [main] DEBUG fr.diginamic.jdbc.AppLogback - Traitement : param = executeUpdate : statement fermé
+12:41:41.508 [main] DEBUG fr.diginamic.jdbc.AppLogback - Traitement : param = executeUpdate : insert ignore into article (ID,REF,DESIGNATION,PRIX,ID_FOURNISSEUR) values(?,?,?,?,?);
+12:41:41.509 [main] DEBUG fr.diginamic.jdbc.AppLogback - Traitement : param = executeUpdate : commit 
+12:41:41.509 [main] DEBUG fr.diginamic.jdbc.AppLogback - Traitement : param = executeUpdate : statement fermé
+12:41:41.564 [main] DEBUG fr.diginamic.jdbc.AppLogback - Traitement : param = executeUpdate : update article set prix= prix-(prix*?/100) where designation like '%mate%'
+12:41:41.564 [main] DEBUG fr.diginamic.jdbc.AppLogback - Traitement : param = executeUpdate : commit 
+12:41:41.564 [main] DEBUG fr.diginamic.jdbc.AppLogback - Traitement : param = executeUpdate : statement fermé
+12:41:41.566 [main] DEBUG fr.diginamic.jdbc.AppLogback - Traitement : param = executeQuery : select * from article a inner join fournisseur f on a.ID_FOURNISSEUR = f.ID order by a.ID
+12:41:41.566 [main] DEBUG fr.diginamic.jdbc.AppLogback - Traitement : param = executeQuery : commit
+12:41:41.566 [main] DEBUG fr.diginamic.jdbc.AppLogback - Traitement : param = executeQuery : statement fermé
+12:41:41.571 [main] DEBUG fr.diginamic.jdbc.AppLogback - Traitement : param = executeQuery : select ROUND(AVG(prix),2) as moyenne from article
+12:41:41.571 [main] DEBUG fr.diginamic.jdbc.AppLogback - Traitement : param = executeQuery : commit
+12:41:41.571 [main] DEBUG fr.diginamic.jdbc.AppLogback - Traitement : param = executeQuery : statement fermé
+12:41:41.620 [main] DEBUG fr.diginamic.jdbc.AppLogback - Traitement : param = executeUpdate : delete from article where designation like '%Peinture%'
+12:41:41.620 [main] DEBUG fr.diginamic.jdbc.AppLogback - Traitement : param = executeUpdate : commit 
+12:41:41.620 [main] DEBUG fr.diginamic.jdbc.AppLogback - Traitement : param = executeUpdate : statement fermé
+12:41:41.653 [main] DEBUG fr.diginamic.jdbc.AppLogback - Traitement : param = executeUpdate : delete from fournisseur where id=?
+12:41:41.653 [main] DEBUG fr.diginamic.jdbc.AppLogback - Traitement : param = executeUpdate : commit 
+12:41:41.653 [main] DEBUG fr.diginamic.jdbc.AppLogback - Traitement : param = executeUpdate : statement fermé
+12:41:41.655 [main] DEBUG fr.diginamic.jdbc.AppLogback - Traitement : param = connexion fermée
+12:41:41.656 [main] DEBUG fr.diginamic.jdbc.AppLogback - Traitement : param = connexion fermée
+12:42:11.948 [main] DEBUG fr.diginamic.jdbc.AppLogback - Traitement : param = Connexion : executeQuery
+12:42:12.012 [main] DEBUG fr.diginamic.jdbc.AppLogback - Traitement : param = executeQuery : Select * from villes v inner join departements d on v.code_dept = d.code inner join regions r on d.code_region = r.code where v.nom = 'Montpellier'
+12:42:12.012 [main] DEBUG fr.diginamic.jdbc.AppLogback - Traitement : param = executeQuery : commit
+12:42:12.012 [main] DEBUG fr.diginamic.jdbc.AppLogback - Traitement : param = executeQuery : statement fermé
+12:42:12.326 [main] DEBUG fr.diginamic.jdbc.AppLogback - Traitement : param = executeQuery : Select sum(population) from villes where code_dept=34 group by code_dept
+12:42:12.326 [main] DEBUG fr.diginamic.jdbc.AppLogback - Traitement : param = executeQuery : commit
+12:42:12.326 [main] DEBUG fr.diginamic.jdbc.AppLogback - Traitement : param = executeQuery : statement fermé
+12:42:12.326 [main] DEBUG fr.diginamic.jdbc.AppLogback - Traitement : param = executeQuery : Select nom from villes where code_dept=34 order by population asc limit 1
+12:42:12.326 [main] DEBUG fr.diginamic.jdbc.AppLogback - Traitement : param = executeQuery : commit
+12:42:12.326 [main] DEBUG fr.diginamic.jdbc.AppLogback - Traitement : param = executeQuery : statement fermé
+12:42:12.342 [main] DEBUG fr.diginamic.jdbc.AppLogback - Traitement : param = executeQuery : Select * from villes v inner join departements d on v.code_dept = d.code inner join regions r on d.code_region = r.code where v.CODE_DEPT = 34 order by population desc limit 10
+12:42:12.342 [main] DEBUG fr.diginamic.jdbc.AppLogback - Traitement : param = executeQuery : commit
+12:42:12.342 [main] DEBUG fr.diginamic.jdbc.AppLogback - Traitement : param = executeQuery : statement fermé
+12:42:12.342 [main] DEBUG fr.diginamic.jdbc.AppLogback - Traitement : param = executeQuery : Select * from villes v inner join departements d on v.code_dept = d.code inner join regions r on d.code_region = r.code where v.CODE_DEPT = 34 order by population asc limit 10
+12:42:12.342 [main] DEBUG fr.diginamic.jdbc.AppLogback - Traitement : param = executeQuery : commit
+12:42:12.342 [main] DEBUG fr.diginamic.jdbc.AppLogback - Traitement : param = executeQuery : statement fermé
+12:42:12.542 [main] DEBUG fr.diginamic.jdbc.AppLogback - Traitement : param = executeQuery : Select sum(population) from villes v inner join departements d on v.code_dept = d.CODE inner join regions r on d.CODE_REGION = r.CODE where r.nom='Occitanie' group by r.nom
+12:42:12.542 [main] DEBUG fr.diginamic.jdbc.AppLogback - Traitement : param = executeQuery : commit
+12:42:12.542 [main] DEBUG fr.diginamic.jdbc.AppLogback - Traitement : param = executeQuery : statement fermé
+12:42:12.575 [main] DEBUG fr.diginamic.jdbc.AppLogback - Traitement : param = executeQuery : Select * from villes v inner join departements d on v.code_dept = d.code inner join regions r on d.code_region = r.code where r.nom='Occitanie' order by population desc limit 10
+12:42:12.576 [main] DEBUG fr.diginamic.jdbc.AppLogback - Traitement : param = executeQuery : commit
+12:42:12.576 [main] DEBUG fr.diginamic.jdbc.AppLogback - Traitement : param = executeQuery : statement fermé
+12:42:12.790 [main] DEBUG fr.diginamic.jdbc.AppLogback - Traitement : param = executeQuery : Select CODE_VILLE,v.NOM,CODE_DEPT,r.CODE,r.NOM,sum(population) as POPULATION from villes v inner join departements d on v.code_dept = d.code inner join regions r on d.code_region = r.code group by r.code order by sum(population) desc limit 10
+12:42:12.790 [main] DEBUG fr.diginamic.jdbc.AppLogback - Traitement : param = executeQuery : commit
+12:42:12.790 [main] DEBUG fr.diginamic.jdbc.AppLogback - Traitement : param = executeQuery : statement fermé
+12:42:12.886 [main] DEBUG fr.diginamic.jdbc.AppLogback - Traitement : param = executeQuery : Select CODE_VILLE,v.NOM,CODE_DEPT,r.CODE,r.NOM,sum(population) as POPULATION from villes v inner join departements d on v.code_dept = d.code inner join regions r on d.code_region = r.code group by d.code order by sum(population) desc limit 10
+12:42:12.886 [main] DEBUG fr.diginamic.jdbc.AppLogback - Traitement : param = executeQuery : commit
+12:42:12.886 [main] DEBUG fr.diginamic.jdbc.AppLogback - Traitement : param = executeQuery : statement fermé
+12:42:12.931 [main] DEBUG fr.diginamic.jdbc.AppLogback - Traitement : param = executeQuery : Select * from villes v inner join departements d on v.code_dept = d.code inner join regions r on d.code_region = r.code order by population desc limit 10
+12:42:12.931 [main] DEBUG fr.diginamic.jdbc.AppLogback - Traitement : param = executeQuery : commit
+12:42:12.931 [main] DEBUG fr.diginamic.jdbc.AppLogback - Traitement : param = executeQuery : statement fermé
+12:42:12.935 [main] DEBUG fr.diginamic.jdbc.AppLogback - Traitement : param = connexion fermée

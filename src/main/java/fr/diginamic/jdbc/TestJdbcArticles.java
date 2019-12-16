@@ -2,6 +2,10 @@ package fr.diginamic.jdbc;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+
 import fr.diginamic.jdbc.dao.ArticleDaoJdbc;
 import fr.diginamic.jdbc.dao.FournisseurDaoJdbc;
 import fr.diginamic.jdbc.entites.Article;
@@ -20,16 +24,17 @@ import fr.diginamic.jdbc.entites.Fournisseur;
  */
 public class TestJdbcArticles {
 
+
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-
+		
 		DbManager.URL_DB = "database.urlcompta";
 	
 		long b = System.currentTimeMillis();
 		FournisseurDaoJdbc fournisseurDaoJdbc = new FournisseurDaoJdbc();
 		Fournisseur fournisseurPeinture = new Fournisseur(4,"La Maison de la Peinture");
 		fournisseurDaoJdbc.insert(fournisseurPeinture);
-
+		
 		//fournisseurDaoJdbc.update("La Maison de la Peinture","La Maison des Peintures");
 	
 		ArticleDaoJdbc articleDaoJdbc = new ArticleDaoJdbc();
