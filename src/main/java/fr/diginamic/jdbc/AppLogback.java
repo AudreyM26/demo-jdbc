@@ -9,6 +9,7 @@ public class AppLogback {
 	private static final Logger LOG = LoggerFactory.getLogger(AppLogback.class);
 
 	public void executer(String param) {
-		LOG.debug("Traitement : param = {}", param);
+		LOG.debug("Traitement: param = {}", param);
 	}
 }
+
