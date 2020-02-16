@@ -14,7 +14,7 @@ public class TestDelete {
 
 		boolean suppr = fournisseurDaoJdbc.delete(fournisseur);
 		
-		System.out.println("Ligne supprimÃ©e : "+suppr);
+		System.out.println("Ligne supprimée : "+suppr);
 		
 	}
 

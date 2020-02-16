@@ -16,7 +16,7 @@ public class Region {
 	}
 
 	public String toString(){
-		String texte = "RÃ©gion : "+this.getCodeRegion()+" "+this.getNomRegion()+" - Population : "+this.getNbreHab()+" hab";
+		String texte = "Région : "+this.getCodeRegion()+" "+this.getNomRegion()+" - Population : "+this.getNbreHab()+" hab";
 		return texte;
 	}
 	

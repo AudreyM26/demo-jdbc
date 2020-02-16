@@ -11,7 +11,7 @@ public class Departement {
 	}
 
 	public String toString(){
-		String texte = "DÃ©partement : "+this.getCodeDepartement()+" - Population : "+this.getNbreHab()+" hab";
+		String texte = "Département : "+this.getCodeDepartement()+" - Population : "+this.getNbreHab()+" hab";
 		return texte;
 	}
 	

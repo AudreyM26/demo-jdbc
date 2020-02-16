@@ -14,7 +14,7 @@ public class TestUpdate {
 
 		int nbre_ligne = fournisseurDaoJdbc.update(fournisseur.getNom(),"La Maison des Peintures");
 		
-		System.out.println("Ligne modifiÃ©e : "+nbre_ligne);
+		System.out.println("Ligne modifiée : "+nbre_ligne);
 	}
 
 }

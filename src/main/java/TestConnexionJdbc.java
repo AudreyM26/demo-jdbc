@@ -1,7 +1,6 @@
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ResourceBundle;
 
 public class TestConnexionJdbc {
@@ -14,7 +13,7 @@ public class TestConnexionJdbc {
 			Class.forName("org.mariadb.jdbc.Driver");
 		
 			ResourceBundle monFichierConf = ResourceBundle.getBundle("databases");
-			String urlDB = monFichierConf.getString("database.url");
+			String urlDB = monFichierConf.getString("database.urlcompta");
 			String userDB = monFichierConf.getString("database.user");
 			String passwordDB = monFichierConf.getString("database.password");
 			

@@ -9,11 +9,9 @@ import java.sql.Statement;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /***
- * methode de connexion a la base de donnÃ©es
+ * methode de connexion a la base de données
  * executionUpdate (insert, update et delete
  * executionQuery (select) retourne ResultSet
  * @author audrey
@@ -57,7 +55,7 @@ public class DbManager {
 		try {
 			return DriverManager.getConnection(urlDB, userDB, passwordDB);
 		} catch (SQLException e) {
-			throw new RuntimeException("Impossible de rÃ©cupÃ©rer une nouvelle connexion sur la base de donnÃ©es.");
+			throw new RuntimeException("Impossible de récupérer une nouvelle connexion sur la base de données.");
 		}
 	}
 	
@@ -99,7 +97,7 @@ public class DbManager {
 			try {
 				if(maConnection != null){
 					maConnection.rollback();
-					logService.executer("executeUpdate transaction annulÃ©e ");
+					logService.executer("executeUpdate transaction annulée ");
 				}
 			} catch (SQLException e1) {
 				e1.printStackTrace();
@@ -124,7 +122,7 @@ public class DbManager {
 			try {
 				if(stmt != null){
 					stmt.close();
-					logService.executer("executeUpdate : statement fermÃ©");
+					logService.executer("executeUpdate : statement fermé");
 				}
 			} catch (SQLException e1) {
 				e1.printStackTrace();
@@ -143,7 +141,7 @@ public class DbManager {
 		try {
 			if(maConnection != null){
 				maConnection.close();
-				logService.executer("connexion fermÃ©e");
+				logService.executer("connexion fermée");
 			}
 		} catch (SQLException e2) {
 			e2.printStackTrace();
@@ -182,7 +180,7 @@ public class DbManager {
 			try {
 				if(maConnection != null){
 					maConnection.rollback();
-					logService.executer("executeQuery transaction annulÃ©e");
+					logService.executer("executeQuery transaction annulée");
 				}
 			} catch (SQLException e1) {
 				e1.printStackTrace();
@@ -207,7 +205,7 @@ public class DbManager {
 			try {
 				if(stmt != null){
 					stmt.close();
-					logService.executer("executeQuery : statement fermÃ©");
+					logService.executer("executeQuery : statement fermé");
 				}
 			} catch (SQLException e1) {
 				e1.printStackTrace();

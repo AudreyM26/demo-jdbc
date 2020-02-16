@@ -20,7 +20,7 @@ public class Ville {
 	}
 	
 	public String toString(){
-		String texte = "RÃ©gion : "+this.getRegion().getNomRegion()+" - DÃ©partement : "+this.getDepartement().getCodeDepartement()+" - Commune : "+this.getCodeCommune()+" "+this.getNomCommune()+" - Population : "+this.getPopulation()+" hab";
+		String texte = "Région : "+this.getRegion().getNomRegion()+" - Département : "+this.getDepartement().getCodeDepartement()+" - Commune : "+this.getCodeCommune()+" "+this.getNomCommune()+" - Population : "+this.getPopulation()+" hab";
 		return texte;
 	}
 

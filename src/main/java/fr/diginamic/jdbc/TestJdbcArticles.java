@@ -2,10 +2,6 @@ package fr.diginamic.jdbc;
 
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-
 import fr.diginamic.jdbc.dao.ArticleDaoJdbc;
 import fr.diginamic.jdbc.dao.FournisseurDaoJdbc;
 import fr.diginamic.jdbc.entites.Article;
@@ -41,7 +37,7 @@ public class TestJdbcArticles {
 		
 		Article peintureBlanche = new Article(11,"PB1","Peinture blanche 1L",12.50,fournisseurPeinture); 
 		Article peintureRouge = new Article(12,"PRM1","Peinture rouge mate 1L",15.50,fournisseurPeinture); 
-		Article peintureNoire = new Article(13,"PNL1","Peinture noire laquÃ©e 1L",17.80,fournisseurPeinture); 
+		Article peintureNoire = new Article(13,"PNL1","Peinture noire laquée 1L",17.80,fournisseurPeinture); 
 		Article peintureBleue = new Article(14,"PBM1","Peinture bleue mate 1L",15.50,fournisseurPeinture); 
 		
 		articleDaoJdbc.insert(peintureBlanche);
@@ -60,19 +56,19 @@ public class TestJdbcArticles {
 			System.out.println(a);
 		}
 		
-		System.out.println("\nLa moyenne des prix des articles : "+articleDaoJdbc.moyennePrixArt()+"â‚¬\n");
+		System.out.println("\nLa moyenne des prix des articles : "+articleDaoJdbc.moyennePrixArt()+"€ \n");
 		
 		boolean suppArt = articleDaoJdbc.delete();
 		
 		if(suppArt){
-			System.out.println("Les articles contenant 'Peinture' ont bien Ã©tÃ© supprimÃ©");	
+			System.out.println("Les articles contenant 'Peinture' ont bien été supprimé");	
 		}
 		
 		String fournisseurNomSupp = fournisseurPeinture.getNom();
 		boolean suppr = fournisseurDaoJdbc.delete(fournisseurPeinture);
 		
 		if(suppr){
-			System.out.println("Le fournisseur '"+fournisseurNomSupp+"' a bien Ã©tÃ© supprimÃ©");
+			System.out.println("Le fournisseur '"+fournisseurNomSupp+"' a bien été supprimé");
 		}
 		
 		long c = System.currentTimeMillis();

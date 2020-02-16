@@ -6,8 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.diginamic.jdbc.DbManager;
-import fr.diginamic.jdbc.entites.Article;
-import fr.diginamic.jdbc.entites.Fournisseur;
 import fr.diginamic.recensement.entites.*;
 
 public class RecensementDaoJdbc implements RecensementDao {

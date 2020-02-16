@@ -13,7 +13,7 @@ public class TestInsertion {
 		Fournisseur fournisseur = new Fournisseur(4,"La Maison de la Peinture");
 		fournisseurDaoJdbc.insert(fournisseur);
 		
-		Fournisseur fournisseur2 = new Fournisseur(5,"L'Espace CrÃ©ation");
+		Fournisseur fournisseur2 = new Fournisseur(5,"L'Espace Création");
 		fournisseurDaoJdbc.insert(fournisseur2);
 	}
 }

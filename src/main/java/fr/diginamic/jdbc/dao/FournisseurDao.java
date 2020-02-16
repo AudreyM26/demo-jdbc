@@ -4,7 +4,7 @@ import java.util.List;
 import fr.diginamic.jdbc.entites.Fournisseur;
 
 /***
- * methodes a parir de la base de donnÃ©es
+ * methodes a parir de la base de données
  * - lister les fournisseurs
  * - insertion d un fournisseurs
  * - mise a jour d un fournisseurs
